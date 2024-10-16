@@ -5,13 +5,12 @@ from dash import Dash, html
 from dash_compose import composition
 
 from .common import settings
-from .db import get_session, list_services
+from .db import get_session, init_db, list_services
 
 app = Dash(
     external_stylesheets=[dbc.themes.UNITED],
     requests_pathname_prefix=settings.root_path + ('' if settings.root_path[-1] == '/' else '/')
 )
-server = app.server
 
 
 @composition
@@ -41,6 +40,16 @@ def layout():
 
 app.layout = layout
 
+
+# Production server
+def server():
+    """Initialise the app and return the Flask server"""
+    init_db()
+    return app.server
+
+
+# Development server
 if __name__ == '__main__':
+    init_db()
     print(settings)
     app.run(debug=True)

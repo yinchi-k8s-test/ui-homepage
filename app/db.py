@@ -22,6 +22,3 @@ def list_services(session: Session):
     results = session.exec(statement)
     svcs = list(results.all())
     return svcs
-
-
-init_db()
