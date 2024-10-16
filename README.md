@@ -23,9 +23,10 @@ uv run python -m app.ui
 
 ### Docker container
 
-Our Kubernetes cluster has its own container registry at `http://localhost:32000`. To build the Docker container and deploy to the Kubernetes cluster:
+Our Kubernetes cluster has its own container registry at `http://localhost:32000`. To build the Docker container and deploy to the Kubernetes cluster (assuming your Kubernetes deployment is pointing to the `latest` tag):
 ```bash
 docker buildx build . -t localhost:32000/ui-homepage:latest --push
+kubectl rollout restart deployment/ui-homepage
 ```
 
 See the [corresponding README.md file](https://github.com/yinchi-k8s-test/microk8s/tree/main/ui-homepage) in the `microk8s` repo.  Note that the Docker container serves the homepage app from port `8000`.
